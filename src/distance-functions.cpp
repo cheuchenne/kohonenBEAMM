@@ -100,14 +100,14 @@ Rcpp::NumericVector ObjectDistances(Rcpp::NumericMatrix data,
             Rcpp::IntegerMatrix numNAs,
             Rcpp::ExpressionVector distanceFunctions,
             Rcpp::NumericVector weights) {
-  
+
   int numObjects = data.ncol();
   int totalVars = data.nrow();
   int numLayers = numVars.size();
 
   Rcpp::NumericVector offsets(numLayers);
   Rcpp::NumericVector distances((numObjects * (numObjects - 1)) / 2);
-  
+
   totalVars = 0;
   for (int l = 0; l < numLayers; l++) {
     offsets[l] = totalVars;
@@ -137,7 +137,7 @@ Rcpp::NumericVector ObjectDistances(Rcpp::NumericMatrix data,
       ix++;
     }
   }
-  
+
   return distances;
 }
 
@@ -163,7 +163,7 @@ void FindBestMatchingUnit(
   double dist;
 
   index = NA_INTEGER;
-  distance = DOUBLE_XMAX;
+  distance = DBL_MAX;
   for (int cd = 0; cd < numCodes; ++cd) {
 
     /* Calculate current unit distance */
@@ -189,8 +189,8 @@ void FindBestMatchingUnit(
       distance = dist;
     }
   }
-  
-  if (distance == DOUBLE_XMAX) {
+
+  if (distance == DBL_MAX) {
     distance = NA_REAL;
     index = NA_INTEGER;
   }
@@ -335,4 +335,4 @@ double ManhattanDistance(double *data, double *codes, int n, int nNA) {
   }
   return d;
 }
- 
+
